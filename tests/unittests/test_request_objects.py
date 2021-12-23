@@ -29,7 +29,7 @@ def test_base_request_fails_if_lacking_name():
 @pytest.mark.parametrize("time_object", [StartTimeRequest, StopTimeRequest])
 def test_time_objects(time_object):
     test_time_obj = time_object(value=datetime(year=2021, month=11, day=28, hour=9, minute=30, second=0))
-    assert test_time_obj.generate_request_param() == f"{test_time_obj.name.upper()}=2021-Nov-28 09:30:00.000000"
+    assert test_time_obj.generate_request_param() == f"&{test_time_obj.name.upper()}=2021-Nov-28 09:30:00.000000"
 
 
 @pytest.mark.usefixtures("freezer")
