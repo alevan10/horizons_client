@@ -10,10 +10,10 @@ HORIZONS_BASE_URL = os.environ.get("HORIZONS_BASE_URL", "https://ssd.jpl.nasa.go
 class HorizonsRequestService(object):
     base_url = f"{HORIZONS_BASE_URL}" \
                f"?format=json" \
-               f"&MAKE_EPHEM='YES'" \
-               f"&EPHEM_TYPE='OBSERVER'" \
-               f"&ANG_FORMAT='DEG'" \
-               f"&CSV_FORMAT='YES'"
+               f"&MAKE_EPHEM=YES" \
+               f"&EPHEM_TYPE=OBSERVER" \
+               f"&ANG_FORMAT=DEG" \
+               f"&CSV_FORMAT=YES"
 
     def __init__(self, request_objects: List[BaseRequestObject]=None):
         if request_objects is None:

@@ -29,7 +29,7 @@ class BaseTimeRequest(BaseRequestObject):
 
     def generate_request_param(self) -> str:
         formatted_time = self.value.strftime(self.time_format)
-        return f"{self.name.upper()}={formatted_time}"
+        return f"&{self.name.upper()}={formatted_time}"
 
 
 class StartTimeRequest(BaseTimeRequest):
