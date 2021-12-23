@@ -4,7 +4,7 @@ from aiohttp import ClientSession
 
 from services.request_objects import BaseRequestObject
 
-HORIZONS_BASE_URL = os.environ.get("HORIZONS_BASE_URL", "http://ssd.jpl.nasa.gov/api/horizons.api")
+HORIZONS_BASE_URL = os.environ.get("HORIZONS_BASE_URL", "https://ssd.jpl.nasa.gov/api/horizons.api")
 
 
 class HorizonsRequestService(object):
