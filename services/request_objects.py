@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Union, Any
+from typing import Union, Any, Tuple
 
 from entities.enums import Planets, Moons, Observers
 
@@ -13,8 +13,8 @@ class BaseRequestObject(object):
             raise NotImplementedError("Class needs a 'name' value before use")
         self.value = value
 
-    def generate_request_param(self) -> str:
-        return f"{self.name.upper()}={self.value}"
+    def generate_request_param(self) -> Tuple[str, str]:
+        return self.name.upper(), f"'{self.value}'"
 
 
 class BaseTimeRequest(BaseRequestObject):
@@ -26,10 +26,9 @@ class BaseTimeRequest(BaseRequestObject):
         if not isinstance(self.value, datetime):
             raise ValueError("Value must be of type 'datetime'")
 
-
-    def generate_request_param(self) -> str:
+    def generate_request_param(self) -> Tuple[str, str]:
         formatted_time = self.value.strftime(self.time_format)
-        return f"&{self.name.upper()}={formatted_time}"
+        return self.name.upper(), f"'{formatted_time}'"
 
 
 class StartTimeRequest(BaseTimeRequest):
