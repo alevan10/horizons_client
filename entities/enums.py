@@ -39,3 +39,16 @@ class StepSize(APIEnum):
 class EphemerideOptions(APIEnum):
     APPARENT_RA_AND_DEC = 1
     TRUE_ANOMALY = 41
+
+
+class ResponseOptions(APIEnum):
+    DATE = "Date__(UT)__HR:MN:SC.fff"
+    RA_ICRF = "R.A._(ICRF)"
+    RA_A_APP = "R.A._(a-app)"
+    DEC_ICRF = "DEC_(ICRF)"
+    DEC_A_APP = "DEC_(a-app)"
+    D_RA = "dRA"
+    AP_MAG = "APmag"
+    S_BRT = "S-brt"
+    DELTA = "delta"
+    DELDOT = "deldot"
