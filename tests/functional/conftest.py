@@ -1,11 +1,10 @@
 from datetime import datetime, timedelta
 
 import pytest
-import pytest_freezegun
 
-from entities.enums import Planets, Observers
-from services.horizons_request_service import HorizonsRequestService
-from services.request_objects import StartTimeRequest, StopTimeRequest, CommandRequestObject, CenterRequestObject
+from horizons_client.entities.enums import Planets, Observers
+from horizons_client.services.horizons_request_service import HorizonsRequestService
+from horizons_client.services.request_objects import StartTimeRequest, StopTimeRequest, CommandRequestObject, CenterRequestObject
 
 
 @pytest.fixture

@@ -3,9 +3,9 @@ import os
 from typing import List
 from aiohttp import ClientSession
 
-from services.request_objects import BaseRequestObject
-from services.response_object import ResponseObject
-from services.utils import deserialize_ephem_data
+from horizons_client.services.request_objects import BaseRequestObject
+from horizons_client.services.response_object import ResponseObject
+from horizons_client.services.utils import deserialize_ephem_data
 
 HORIZONS_BASE_URL = os.environ.get("HORIZONS_BASE_URL", "https://ssd.jpl.nasa.gov/api/horizons.api")
 

@@ -6,7 +6,7 @@ from typing import List
 
 import pandas as pd
 
-from services.response_object import ResponseObject
+from horizons_client.services.response_object import ResponseObject
 
 
 class CsvFileWriter(object):

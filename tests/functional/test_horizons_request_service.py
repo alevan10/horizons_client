@@ -1,7 +1,5 @@
 import pytest
 
-from services.horizons_request_service import HorizonsRequestService
-
 
 class TestHorizonsRequestService(object):
 
