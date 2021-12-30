@@ -29,8 +29,22 @@ before_script:
   - virtualenv venv
   - source venv/bin/activate
   - pip install -r requirements.txt
+  - export PYTHONPATH="$PYTHONPATH:$(pwd)/src"
 
-test:
+stages:
+  - Static Analysis
+  - Tests
+
+pylint:
+  stage: Static Analysis
   script:
-    - export PYTHONPATH="$PYTHONPATH:$(pwd)/src"
-    - pytest -v ./tests
+    - pylint -d C0301 src/*.py
+
+unit_tests:
+  stage: Tests
+  script:
+    - pytest -v ./tests/unittests
+functional_tests:
+  stage: Tests
+  script:
+    - pytest -v ./tests/functional
