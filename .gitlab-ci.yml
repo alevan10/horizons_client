@@ -35,16 +35,17 @@ stages:
   - Static Analysis
   - Tests
 
-pylint:
+Pylint:
   stage: Static Analysis
   script:
-    - pylint -d C0301 src/*.py
+    - pylint -d C0301 ./src/*.py
 
-unit_tests:
+Unit:
   stage: Tests
   script:
     - pytest -v ./tests/unittests
-functional_tests:
+
+Functional:
   stage: Tests
   script:
     - pytest -v ./tests/functional
