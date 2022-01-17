@@ -5,12 +5,13 @@ from unittest import mock
 import pytest
 from freezegun import freeze_time
 
+from horizons_client.entities.enums import ResponseOptions
 from horizons_client.services.response_object import ResponseObject
 
 
 @pytest.fixture
 def good_columns() -> List[str]:
-    yield ["Date", "col_2", "col_3"]
+    yield [ResponseOptions.DATE, "col_2", "col_3"]
 
 
 @pytest.fixture
@@ -26,7 +27,6 @@ def test_columns(good_columns, bad_columns) -> List[str]:
 class MockResponseObject(ResponseObject):
 
     def __init__(self, response_dict: Dict[str, Any]):
-        self.test_date = response_dict.pop("Date")
         self.col_2 = response_dict.pop("col_2")
         self.col_3 = response_dict.pop("col_3")
         self.others = response_dict

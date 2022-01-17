@@ -2,6 +2,7 @@ from typing import List
 
 import pytest
 
+from horizons_client.entities.enums import ResponseOptions
 from horizons_client.services.utils import deserialize_ephem_data
 from tests.unittests.conftest import MockResponseObject
 
@@ -14,10 +15,8 @@ class TestDeserializeEphemData(object):
         assert len(responses) == len(test_rows)
         for response, row in zip(responses, test_rows):
             for column in good_columns:
-                if column != "Date":
+                if column != ResponseOptions.DATE:
                     assert response.__getattribute__(column) in row
-                else:
-                    assert response.test_date in row
             for bad_column in bad_columns:
                 assert bad_column not in response.others.keys()
 
