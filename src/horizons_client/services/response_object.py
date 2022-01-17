@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
 
-from entities.enums import ResponseOptions
+from horizons_client.entities.enums import ResponseOptions
 
 
 class ResponseObject(object):

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Union, Any, Tuple
 
-from entities.enums import Planets, Moons, Observers
+from horizons_client.entities.enums import Planets, Moons, Observers
 
 
 class BaseRequestObject(object):

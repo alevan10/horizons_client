@@ -2,7 +2,7 @@ from typing import List
 
 import pytest
 
-from services.utils import deserialize_ephem_data
+from horizons_client.services.utils import deserialize_ephem_data
 from tests.unittests.conftest import MockResponseObject
 
 

@@ -5,7 +5,7 @@ from unittest import mock
 import pytest
 from freezegun import freeze_time
 
-from services.response_object import ResponseObject
+from horizons_client.services.response_object import ResponseObject
 
 
 @pytest.fixture
@@ -69,6 +69,6 @@ def test_raw_data(test_columns, test_rows, generate_headers, generate_body_data)
 
 @pytest.fixture
 def use_mock_response_object():
-    with mock.patch("services.utils.ResponseObject") as response_object:
+    with mock.patch("horizons_client.services.utils.ResponseObject") as response_object:
         response_object.side_effect = MockResponseObject
         yield response_object

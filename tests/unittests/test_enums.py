@@ -1,4 +1,4 @@
-from entities.enums import APIEnum
+from horizons_client.entities.enums import APIEnum
 
 
 class TestClass(APIEnum):

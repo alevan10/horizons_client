@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import pytest
-from services.request_objects import BaseRequestObject, BaseTimeRequest, StartTimeRequest, StopTimeRequest
+from horizons_client.services.request_objects import BaseRequestObject, StartTimeRequest, StopTimeRequest
 
 
 @pytest.fixture
