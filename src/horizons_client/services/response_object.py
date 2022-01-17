@@ -1,12 +1,26 @@
-from typing import List, Dict, Any
+from typing import Dict, Any
+
+from dateutil.parser import parse, ParserError
 
 from horizons_client.entities.enums import ResponseOptions
+import logging
+
+logger = logging.getLogger("ResponseObject")
+
+DATETIME_PARSE_MESSAGE = "Deserialization of date value {} failed"
 
 
 class ResponseObject(object):
 
-    def __init__(self, response_dict: Dict[str, List[Any]]):
-        self.date = response_dict.get(ResponseOptions.DATE)
+    def __init__(self, response_dict: Dict[str, Any]):
+        try:
+            self.date = parse(response_dict.get(ResponseOptions.DATE))
+        except (ParserError, ValueError, TypeError):
+            logger.error(
+                DATETIME_PARSE_MESSAGE.format(response_dict.get(ResponseOptions.DATE)),
+                extra=response_dict
+            )
+            raise
         self.ra_icrf = response_dict.get(ResponseOptions.RA_ICRF)
         self.ra_a_app = response_dict.get(ResponseOptions.RA_A_APP)
         self.dec_icrf = response_dict.get(ResponseOptions.DEC_ICRF)
@@ -16,4 +30,3 @@ class ResponseObject(object):
         self.s_brt = response_dict.get(ResponseOptions.S_BRT)
         self.delta = response_dict.get(ResponseOptions.DELTA)
         self.deldot = response_dict.get(ResponseOptions.DELDOT)
-
