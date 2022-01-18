@@ -45,7 +45,7 @@ Pylint:
 Black:
   stage: Static Analysis
   script:
-    - python -m black --check --verbose
+    - python -m black . --check --verbose
 
 Unit:
   stage: Tests
