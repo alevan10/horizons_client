@@ -4,7 +4,10 @@ from unittest import mock
 import pytest
 
 from horizons_client.entities.enums import ResponseOptions
-from horizons_client.services.response_object import ResponseObject, DATETIME_PARSE_MESSAGE
+from horizons_client.services.response_object import (
+    DATETIME_PARSE_MESSAGE,
+    ResponseObject,
+)
 
 
 @pytest.fixture
@@ -12,6 +15,7 @@ def example_horizons_date():
     yield "2022-Jan-17 09:41:58.197"
 
 
+# pylint: disable=redefined-outer-name
 def test_instantiate_with_date(example_horizons_date):
     obj = ResponseObject({ResponseOptions.DATE: example_horizons_date})
     assert obj
@@ -31,5 +35,6 @@ def test_instantiate_with_bad_date(bad_date):
         imput_dict = {ResponseOptions.DATE: bad_date}
         with pytest.raises((ParserError, ValueError, TypeError)):
             ResponseObject(imput_dict)
-            assert mock_logger.assert_called_with(DATETIME_PARSE_MESSAGE.format(bad_date), extra=imput_dict)
-
+            assert mock_logger.assert_called_with(
+                DATETIME_PARSE_MESSAGE.format(bad_date), extra=imput_dict
+            )

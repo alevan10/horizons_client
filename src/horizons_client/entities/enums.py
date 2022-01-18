@@ -1,5 +1,4 @@
-class APIEnum(object):
-
+class APIEnum:
     @classmethod
     def to_list(cls):
         return [key for key in cls.__dict__.keys() if not key.startswith("_")]

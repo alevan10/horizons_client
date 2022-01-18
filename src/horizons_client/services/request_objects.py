@@ -1,10 +1,10 @@
 from datetime import datetime
-from typing import Union, Any, Tuple
+from typing import Any, Tuple, Union
 
-from horizons_client.entities.enums import Planets, Moons, Observers
+from horizons_client.entities.enums import Moons, Observers, Planets
 
 
-class BaseRequestObject(object):
+class BaseRequestObject:
     name: str = ""
     value: Any = ""
 
@@ -45,7 +45,9 @@ class CommandRequestObject(BaseRequestObject):
 
     name = "command"
 
-    def __init__(self, value: Union[Planets, Moons]):
+    def __init__(
+        self, value: Union[Planets, Moons]
+    ):  # pylint: disable=useless-super-delegation
         super().__init__(value)
 
 
@@ -53,7 +55,5 @@ class CenterRequestObject(BaseRequestObject):
 
     name = "center"
 
-    def __init__(self, value: Observers):
+    def __init__(self, value: Observers):  # pylint: disable=useless-super-delegation
         super().__init__(value)
-
-
