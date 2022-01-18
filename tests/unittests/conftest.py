@@ -1,16 +1,17 @@
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import Any, Dict, List
 from unittest import mock
 
 import pytest
 from freezegun import freeze_time
 
+from horizons_client.entities.enums import ResponseOptions
 from horizons_client.services.response_object import ResponseObject
 
 
 @pytest.fixture
 def good_columns() -> List[str]:
-    yield ["Date", "col_2", "col_3"]
+    yield [ResponseOptions.DATE, "col_2", "col_3"]
 
 
 @pytest.fixture
@@ -19,14 +20,13 @@ def bad_columns() -> List[str]:
 
 
 @pytest.fixture
+# pylint: disable=redefined-outer-name
 def test_columns(good_columns, bad_columns) -> List[str]:
     yield [*good_columns, *bad_columns]
 
 
 class MockResponseObject(ResponseObject):
-
     def __init__(self, response_dict: Dict[str, Any]):
-        self.test_date = response_dict.pop("Date")
         self.col_2 = response_dict.pop("col_2")
         self.col_3 = response_dict.pop("col_3")
         self.others = response_dict
@@ -55,12 +55,13 @@ def generate_body_data():
     def _format_ephem_data(rows: List[List[str]]) -> str:
         formatted_rows = [",".join(row) for row in rows]
         data = "\n".join(formatted_rows)
-        return f'$$SOE{data}\n$$EOE'
+        return f"$$SOE{data}\n$$EOE"
 
     yield _format_ephem_data
 
 
 @pytest.fixture
+# pylint: disable=redefined-outer-name
 def test_raw_data(test_columns, test_rows, generate_headers, generate_body_data):
     headers = generate_headers(test_columns)
     body = generate_body_data(test_rows)

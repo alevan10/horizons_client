@@ -1,7 +1,12 @@
 from datetime import datetime
 
 import pytest
-from horizons_client.services.request_objects import BaseRequestObject, StartTimeRequest, StopTimeRequest
+
+from horizons_client.services.request_objects import (
+    BaseRequestObject,
+    StartTimeRequest,
+    StopTimeRequest,
+)
 
 
 @pytest.fixture
@@ -13,6 +18,7 @@ def fake_request_class():
     yield FakeRequestObject
 
 
+# pylint: disable=redefined-outer-name
 def test_base_request_object(fake_request_class):
     fake_object = fake_request_class(value="parakeet value")
     assert fake_object.name == "Fake-Object"
@@ -28,8 +34,13 @@ def test_base_request_fails_if_lacking_name():
 
 @pytest.mark.parametrize("time_object", [StartTimeRequest, StopTimeRequest])
 def test_time_objects(time_object):
-    test_time_obj = time_object(value=datetime(year=2021, month=11, day=28, hour=9, minute=30, second=0))
-    assert test_time_obj.generate_request_param() == (test_time_obj.name.upper(), "'2021-Nov-28 09:30:00.000000'")
+    test_time_obj = time_object(
+        value=datetime(year=2021, month=11, day=28, hour=9, minute=30, second=0)
+    )
+    assert test_time_obj.generate_request_param() == (
+        test_time_obj.name.upper(),
+        "'2021-Nov-28 09:30:00.000000'",
+    )
 
 
 @pytest.mark.usefixtures("freezer")
@@ -42,4 +53,3 @@ def test_time_objects_only_accept_datetime_objects(time_object):
     with pytest.raises(ValueError):
         bad_time_obj = time_object(value="please fail")
         assert not bad_time_obj
-

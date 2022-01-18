@@ -40,6 +40,11 @@ Pylint:
   script:
     - pylint -d C0301 src/horizons_client/*.py
 
+Black:
+  stage: Static Analysis
+  script:
+    - python -m black --check --verbose
+
 Unit:
   stage: Tests
   script:

@@ -1,22 +1,24 @@
 import os
-
 from typing import List
+
 from aiohttp import ClientSession
 
 from horizons_client.services.request_objects import BaseRequestObject
 from horizons_client.services.response_object import ResponseObject
 from horizons_client.services.utils import deserialize_ephem_data
 
-HORIZONS_BASE_URL = os.environ.get("HORIZONS_BASE_URL", "https://ssd.jpl.nasa.gov/api/horizons.api")
+HORIZONS_BASE_URL = os.environ.get(
+    "HORIZONS_BASE_URL", "https://ssd.jpl.nasa.gov/api/horizons.api"
+)
 
 
 class HorizonsRequestService(object):
     base_params = [
-        ('format', 'json'),
-        ('MAKE_EPHEM', 'YES'),
-        ('EPHEM_TYPE', 'OBSERVER'),
-        ('ANG_FORMAT', 'DEG'),
-        ('CSV_FORMAT', 'YES')
+        ("format", "json"),
+        ("MAKE_EPHEM", "YES"),
+        ("EPHEM_TYPE", "OBSERVER"),
+        ("ANG_FORMAT", "DEG"),
+        ("CSV_FORMAT", "YES"),
     ]
 
     def __init__(self, request_objects: List[BaseRequestObject] = None):
@@ -29,10 +31,12 @@ class HorizonsRequestService(object):
         for obj in self._request_objects:
             request_params.append(obj.generate_request_param())
         async with ClientSession() as session:
-            async with session.request(method='GET', url=HORIZONS_BASE_URL, params=request_params) as resp:
+            async with session.request(
+                method="GET", url=HORIZONS_BASE_URL, params=request_params
+            ) as resp:
                 assert resp.ok
                 response_data = await resp.json()
-                result = response_data.get('result')
+                result = response_data.get("result")
                 assert result
                 return deserialize_ephem_data(result)
 

@@ -9,10 +9,12 @@ import pandas as pd
 from horizons_client.services.response_object import ResponseObject
 
 
-class CsvFileWriter(object):
+class CsvFileWriter:
     def __init__(self, csv_data: str):
         self.csv_data = csv_data
-        self.file = NamedTemporaryFile(mode="w", delete=False)
+        self.file = NamedTemporaryFile(  # pylint: disable=consider-using-with
+            mode="w", delete=False
+        )
 
     def __enter__(self):
         self.file.write(self.csv_data)
