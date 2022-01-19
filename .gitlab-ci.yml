@@ -63,8 +63,6 @@ Build Package:
   stage: Build
   only:
     - main
-  rules:
-    - if: $CI_PIPELINE_SOURCE != 'merge_request_event'
   script:
     - poetry build --format wheel
     - cd dist
@@ -74,8 +72,6 @@ Publish Package:
   stage: Publish
   only:
     - main
-  rules:
-    - if: $CI_PIPELINE_SOURCE != 'merge_request_event'
   script:
     - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@dev.levan.home/alevan/horizons-api.git
     - mv horizons-client.whl horizons_api/horizons_client/horizons-client.whl
