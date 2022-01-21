@@ -63,12 +63,18 @@ Build Package:
   stage: Build
 #  only:
 #    - main
+  artifacts:
+    untracked: true
+    paths:
+      - dist/
   script:
     - poetry build --format wheel
     - cd dist
 
 Publish Package:
   stage: Publish
+  dependencies:
+    - Build Package
 #  only:
 #    - main
   script:
