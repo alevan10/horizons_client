@@ -66,7 +66,7 @@ Build Package:
   script:
     - poetry build --format wheel
     - cd dist
-    - cp horizons_client*.whl horizons-client.whl
+    - cp horizons_client*.whl horizons_client-py3-none-any.whl
 
 Publish Package:
   stage: Publish
@@ -74,7 +74,7 @@ Publish Package:
 #    - main
   script:
     - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@dev.levan.home/alevan/horizons-api.git
-    - mv horizons-client.whl horizons-api/horizons_client/horizons-client.whl
-    - cd horizons_api
+    - mv dist/horizons_client-py3-none-any.whl horizons-api/horizons_client/horizons_client-py3-none-any.whl
+    - cd horizons-api
     - export VERSION="$(poetry version | awk 'END {print $NF}')"
     - git checkout -b "ruthie/update_horizons_client_$VERSION" && git add -A && git commit -m "Updating to horizons client version $VERSION"
