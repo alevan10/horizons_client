@@ -1,4 +1,4 @@
-from parser import ParserError
+from parser import ParserError  # pylint: disable=deprecated-module
 from unittest import mock
 
 import pytest
