@@ -7,7 +7,7 @@ class TestClass(APIEnum):
     attribute_3 = "3"
 
 
-def test_APIEnum_to_list():
+def test_APIEnum_to_list():  # pylint: disable=invalid-name
     test_attributes = ["attribute_1", "attribute_2", "attribute_3"]
     attribute_list = TestClass.to_list()
     for test_attribute in test_attributes:
