@@ -34,32 +34,33 @@ before_script:
   - export PYTHONPATH="$PYTHONPATH:$(pwd)/src"
   - git config --global user.email ruthie@andrewlevan.com
   - git config --global user.name robo_ruthie
+  - git config --global credential.helper cache
 
 stages:
-  - Static Analysis
-  - Tests
+#  - Static Analysis
+#  - Tests
   - Build
   - Publish
 
-Pylint:
-  stage: Static Analysis
-  script:
-    - pylint -E -d C0301 src/horizons_client tests
-
-Black:
-  stage: Static Analysis
-  script:
-    - python -m black . --check --verbose
-
-Unit:
-  stage: Tests
-  script:
-    - pytest -v ./tests/unittests
-
-Functional:
-  stage: Tests
-  script:
-    - pytest -v ./tests/functional
+#Pylint:
+#  stage: Static Analysis
+#  script:
+#    - pylint -E -d C0301 src/horizons_client tests
+#
+#Black:
+#  stage: Static Analysis
+#  script:
+#    - python -m black . --check --verbose
+#
+#Unit:
+#  stage: Tests
+#  script:
+#    - pytest -v ./tests/unittests
+#
+#Functional:
+#  stage: Tests
+#  script:
+#    - pytest -v ./tests/functional
 
 Build Package:
   stage: Build
@@ -71,7 +72,6 @@ Build Package:
       - dist/
   script:
     - poetry build --format wheel
-    - cd dist
 
 Publish Package:
   stage: Publish
@@ -81,7 +81,7 @@ Publish Package:
 #    - main
   script:
     - export VERSION="$(poetry version | awk 'END {print $NF}')"
-    - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@dev.levan.home/alevan/horizons-api.git
+    - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@dev.levan.home/robo_ruthie/horizons-api.git
     - rm -rf horizons-api/horizons_client && mkdir horizons-api/horizons_client
     - mv dist/* horizons-api/horizons_client
     - cd horizons-api
