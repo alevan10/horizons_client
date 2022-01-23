@@ -81,7 +81,7 @@ Publish Package:
 #    - main
   script:
     - export VERSION="$(poetry version | awk 'END {print $NF}')"
-    - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@dev.levan.home/robo_ruthie/horizons-api.git
+    - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@dev.levan.home/alevan/horizons-api.git
     - rm -rf horizons-api/horizons_client && mkdir horizons-api/horizons_client
     - mv dist/* horizons-api/horizons_client
     - cd horizons-api
