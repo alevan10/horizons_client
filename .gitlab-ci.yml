@@ -44,16 +44,19 @@ stages:
 
 Pylint:
   stage: Static Analysis
+  retry: 1
   script:
     - pylint -E -d C0301 src/horizons_client tests
 
 Black:
   stage: Static Analysis
+  retry: 1
   script:
     - python -m black . --check --verbose
 
 Unit:
   stage: Tests
+  retry: 1
   script:
     - pytest -v ./tests/unittests
 #
@@ -64,6 +67,7 @@ Unit:
 
 Build and Publish Package:
   stage: Build
+  retry: 1
 #  only:
 #    - main
   artifacts:
