@@ -37,32 +37,32 @@ before_script:
   - git config --global credential.helper cache
 
 stages:
-#  - Static Analysis
-#  - Tests
+  - Static Analysis
+  - Tests
   - Build
   - Publish
 
-#Pylint:
-#  stage: Static Analysis
-#  script:
-#    - pylint -E -d C0301 src/horizons_client tests
-#
-#Black:
-#  stage: Static Analysis
-#  script:
-#    - python -m black . --check --verbose
-#
-#Unit:
-#  stage: Tests
-#  script:
-#    - pytest -v ./tests/unittests
+Pylint:
+  stage: Static Analysis
+  script:
+    - pylint -E -d C0301 src/horizons_client tests
+
+Black:
+  stage: Static Analysis
+  script:
+    - python -m black . --check --verbose
+
+Unit:
+  stage: Tests
+  script:
+    - pytest -v ./tests/unittests
 #
 #Functional:
 #  stage: Tests
 #  script:
 #    - pytest -v ./tests/functional
 
-Build Package:
+Build and Publish Package:
   stage: Build
 #  only:
 #    - main
@@ -72,18 +72,4 @@ Build Package:
       - dist/
   script:
     - poetry build --format wheel
-
-Publish Package:
-  stage: Publish
-  dependencies:
-    - Build Package
-#  only:
-#    - main
-  script:
-    - export VERSION="$(poetry version | awk 'END {print $NF}')"
-    - git clone http://gitlab-ci-token:$CI_JOB_TOKEN@dev.levan.home/alevan/horizons-api.git
-    - rm -rf horizons-api/horizons_client && mkdir horizons-api/horizons_client
-    - mv dist/* horizons-api/horizons_client
-    - cd horizons-api
-    - export BRANCH_NAME="ruthie/update_horizons_client_$VERSION"
-    - git checkout -b $BRANCH_NAME && git add -A && git commit -m "Updating to horizons client version $VERSION" && git push -u origin $BRANCH_NAME -o merge_request.create -o merge_request.merge_when_pipeline_succeeds -o merge_request.remove_source_branch -o merge_request.title="Update Horizons Client Version to $VERSION"
+    - twine upload --repository-url http://pypi.home ./dist/*
