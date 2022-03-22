@@ -37,28 +37,27 @@ before_script:
   - git config --global credential.helper cache
 
 stages:
-  - Static Analysis
-  - Tests
-  - Build
-  - Publish
+#  - Static Analysis
+#  - Tests
+  - Build and Publish
 
-Pylint:
-  stage: Static Analysis
-  retry: 1
-  script:
-    - pylint -E -d C0301 src/horizons_client tests
-
-Black:
-  stage: Static Analysis
-  retry: 1
-  script:
-    - python -m black . --check --verbose
-
-Unit:
-  stage: Tests
-  retry: 1
-  script:
-    - pytest -v ./tests/unittests
+#Pylint:
+#  stage: Static Analysis
+#  retry: 1
+#  script:
+#    - pylint -E -d C0301 src/horizons_client tests
+#
+#Black:
+#  stage: Static Analysis
+#  retry: 1
+#  script:
+#    - python -m black . --check --verbose
+#
+#Unit:
+#  stage: Tests
+#  retry: 1
+#  script:
+#    - pytest -v ./tests/unittests
 #
 #Functional:
 #  stage: Tests
@@ -66,7 +65,7 @@ Unit:
 #    - pytest -v ./tests/functional
 
 Build and Publish Package:
-  stage: Build
+  stage: Build and Publish
   retry: 1
 #  only:
 #    - main
@@ -76,4 +75,6 @@ Build and Publish Package:
       - dist/
   script:
     - poetry build --format wheel
-    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --repository-url http://pypi.home ./dist/*
+    - echo "user = $PYPI_USER"
+    - echo "password = $PYPI_PASSWORD"
+    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
