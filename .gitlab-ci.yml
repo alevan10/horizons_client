@@ -74,6 +74,7 @@ Build and Publish Package:
     paths:
       - dist/
   script:
+    - export
     - poetry build --format wheel
     - echo "user = $PYPI_USER"
     - echo "password = $PYPI_PASSWORD"
