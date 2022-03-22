@@ -67,9 +67,6 @@ stages:
 Build and Publish Package:
   stage: Build and Publish
   retry: 1
-  variables:
-    USER: $PYPI_USER
-    PASSWORD: $PYPI_PASSWORD
 #  only:
 #    - main
   artifacts:
@@ -78,4 +75,4 @@ Build and Publish Package:
       - dist/
   script:
     - poetry build --format wheel
-    - twine upload -u "$USER" -p "$PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
+    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
