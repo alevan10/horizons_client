@@ -76,4 +76,4 @@ Build and Publish Package:
       - dist/
   script:
     - poetry build --format wheel
-    - twine upload --repository-url http://pypi.home ./dist/*
+    - twine upload --repository-url http://pypi.home ./dist/* -u $PYPI_USER -p $PYPI_PASSWORD
