@@ -32,27 +32,47 @@ before_script:
   - pip install poetry
   - poetry install -v
   - export PYTHONPATH="$PYTHONPATH:$(pwd)/src"
+  - git config --global user.email ruthie@andrewlevan.com
+  - git config --global user.name robo_ruthie
+  - git config --global credential.helper cache
 
 stages:
   - Static Analysis
   - Tests
+  - Build and Publish
 
 Pylint:
   stage: Static Analysis
+  retry: 1
   script:
-    - pylint -d C0301 src/horizons_client/*.py
+    - pylint -E -d C0301 src/horizons_client tests
 
 Black:
   stage: Static Analysis
+  retry: 1
   script:
     - python -m black . --check --verbose
 
 Unit:
   stage: Tests
+  retry: 1
   script:
     - pytest -v ./tests/unittests
+#
+#Functional:
+#  stage: Tests
+#  script:
+#    - pytest -v ./tests/functional
 
-Functional:
-  stage: Tests
+Build and Publish Package:
+  stage: Build and Publish
+  retry: 1
+  only:
+    - main
+  artifacts:
+    untracked: true
+    paths:
+      - dist/
   script:
-    - pytest -v ./tests/functional
+    - poetry build --format wheel
+    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
