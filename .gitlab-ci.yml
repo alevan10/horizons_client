@@ -37,27 +37,27 @@ before_script:
   - git config --global credential.helper cache
 
 stages:
-#  - Static Analysis
-#  - Tests
+  - Static Analysis
+  - Tests
   - Build and Publish
 
-#Pylint:
-#  stage: Static Analysis
-#  retry: 1
-#  script:
-#    - pylint -E -d C0301 src/horizons_client tests
-#
-#Black:
-#  stage: Static Analysis
-#  retry: 1
-#  script:
-#    - python -m black . --check --verbose
-#
-#Unit:
-#  stage: Tests
-#  retry: 1
-#  script:
-#    - pytest -v ./tests/unittests
+Pylint:
+  stage: Static Analysis
+  retry: 1
+  script:
+    - pylint -E -d C0301 src/horizons_client tests
+
+Black:
+  stage: Static Analysis
+  retry: 1
+  script:
+    - python -m black . --check --verbose
+
+Unit:
+  stage: Tests
+  retry: 1
+  script:
+    - pytest -v ./tests/unittests
 #
 #Functional:
 #  stage: Tests
@@ -67,8 +67,8 @@ stages:
 Build and Publish Package:
   stage: Build and Publish
   retry: 1
-#  only:
-#    - main
+  only:
+    - main
   artifacts:
     untracked: true
     paths:
