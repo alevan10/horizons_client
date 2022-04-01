@@ -40,7 +40,7 @@ before_script:
 stages:
 #  - Static Analysis
 #  - Tests
-  - Build and Publish
+#  - Build and Publish
   - Downstream
 
 #Pylint:
@@ -66,18 +66,18 @@ stages:
 #  script:
 #    - pytest -v ./tests/functional
 
-Build and Publish Package:
-  stage: Build and Publish
-  retry: 1
+#Build and Publish Package:
+#  stage: Build and Publish
+#  retry: 1
 #  only:
 #    - main
-  artifacts:
-    untracked: true
-    paths:
-      - dist/
-  script:
-    - poetry build --format wheel
-    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
+#  artifacts:
+#    untracked: true
+#    paths:
+#      - dist/
+#  script:
+#    - poetry build --format wheel
+#    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
 
 Update Downstream Projects:
   stage: Downstream
