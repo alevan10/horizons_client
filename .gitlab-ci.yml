@@ -37,27 +37,28 @@ before_script:
   - git config --global credential.helper cache
 
 stages:
-  - Static Analysis
-  - Tests
+#  - Static Analysis
+#  - Tests
   - Build and Publish
+  - Downstream
 
-Pylint:
-  stage: Static Analysis
-  retry: 1
-  script:
-    - pylint -E -d C0301 src/horizons_client tests
-
-Black:
-  stage: Static Analysis
-  retry: 1
-  script:
-    - python -m black . --check --verbose
-
-Unit:
-  stage: Tests
-  retry: 1
-  script:
-    - pytest -v ./tests/unittests
+#Pylint:
+#  stage: Static Analysis
+#  retry: 1
+#  script:
+#    - pylint -E -d C0301 src/horizons_client tests
+#
+#Black:
+#  stage: Static Analysis
+#  retry: 1
+#  script:
+#    - python -m black . --check --verbose
+#
+#Unit:
+#  stage: Tests
+#  retry: 1
+#  script:
+#    - pytest -v ./tests/unittests
 #
 #Functional:
 #  stage: Tests
@@ -67,8 +68,8 @@ Unit:
 Build and Publish Package:
   stage: Build and Publish
   retry: 1
-  only:
-    - main
+#  only:
+#    - main
   artifacts:
     untracked: true
     paths:
@@ -76,3 +77,17 @@ Build and Publish Package:
   script:
     - poetry build --format wheel
     - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
+
+Update Downstream Projects:
+  stage: Downstream
+  retry: 1
+#  only:
+#    - main
+  script:
+    - export VERSION="$(poetry version -s)"
+    - export BRANCH_NAME="ruthie/update_horizons_client_$(poetry version -s)"
+    - git clone http://gitlab-ci-token:${CI_JOB_TOKEN}@dev.levan.home/alevan/horizons-api
+    - cd horizons-api
+    - poetry update horizons_client
+    - export BRANCH_NAME="ruthie/update_horizons_client_$VERSION"
+    - git checkout -b $BRANCH_NAME && git add -A && git commit -m "Updating to horizons client version $VERSION" && git push -u origin $BRANCH_NAME -o merge_request.create -o merge_request.merge_when_pipeline_succeeds -o merge_request.remove_source_branch -o merge_request.title="Update Horizons Client Version to $VERSION"
