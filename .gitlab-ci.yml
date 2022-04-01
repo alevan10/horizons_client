@@ -69,8 +69,8 @@ stages:
 Build and Publish Package:
   stage: Build and Publish
   retry: 1
-  only:
-    - main
+#  only:
+#    - main
   artifacts:
     untracked: true
     paths:
