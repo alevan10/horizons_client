@@ -38,52 +38,52 @@ before_script:
   - git config --global credential.helper cache
 
 stages:
-#  - Static Analysis
-#  - Tests
-#  - Build and Publish
+  - Static Analysis
+  - Tests
+  - Build and Publish
   - Downstream
 
-#Pylint:
-#  stage: Static Analysis
-#  retry: 1
-#  script:
-#    - pylint -E -d C0301 src/horizons_client tests
-#
-#Black:
-#  stage: Static Analysis
-#  retry: 1
-#  script:
-#    - python -m black . --check --verbose
-#
-#Unit:
-#  stage: Tests
-#  retry: 1
-#  script:
-#    - pytest -v ./tests/unittests
-#
-#Functional:
-#  stage: Tests
-#  script:
-#    - pytest -v ./tests/functional
+Pylint:
+  stage: Static Analysis
+  retry: 1
+  script:
+    - pylint -E -d C0301 src/horizons_client tests
 
-#Build and Publish Package:
-#  stage: Build and Publish
-#  retry: 1
-#  only:
-#    - main
-#  artifacts:
-#    untracked: true
-#    paths:
-#      - dist/
-#  script:
-#    - poetry build --format wheel
-#    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
+Black:
+  stage: Static Analysis
+  retry: 1
+  script:
+    - python -m black . --check --verbose
+
+Unit:
+  stage: Tests
+  retry: 1
+  script:
+    - pytest -v ./tests/unittests
+
+Functional:
+  stage: Tests
+  script:
+    - pytest -v ./tests/functional
+
+Build and Publish Package:
+  stage: Build and Publish
+  retry: 1
+  only:
+    - main
+  artifacts:
+    untracked: true
+    paths:
+      - dist/
+  script:
+    - poetry build --format wheel
+    - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
 
 Update Downstream Projects:
   stage: Downstream
   retry: 1
-#  only:
-#    - main
+  only:
+    - main
   script:
     - export VERSION="$(poetry version -s)"
     - export BRANCH_NAME="ruthie/update_horizons_client_$(poetry version -s)"
