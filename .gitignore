@@ -2,4 +2,3 @@ venv
 .pytest_cache
 .idea
 /dist/
-poetry.lock
