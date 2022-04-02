@@ -25,11 +25,8 @@ cache:
 
 before_script:
   - python -V  # Print out python version for debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip install --upgrade pip
   - pip install poetry
+  - poetry config virtualenvs.create false
   - poetry config http-basic.home $PYPI_USER $PYPI_PASSWORD
   - poetry install -v
   - export PYTHONPATH="$PYTHONPATH:$(pwd)/src"
@@ -76,7 +73,7 @@ Build and Publish Package:
     paths:
       - dist/
   script:
-    - poetry build --format wheel
+    - poetry build
     - twine upload -u "$PYPI_USER" -p "$PYPI_PASSWORD" --verbose --repository-url http://pypi.home ./dist/*
 
 Update Downstream Projects:
