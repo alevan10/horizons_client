@@ -1,10 +1,7 @@
-class APIEnum:
-    @classmethod
-    def to_list(cls):
-        return [key for key in cls.__dict__.keys() if not key.startswith("_")]
+from enum import Enum
 
 
-class Planets(APIEnum):
+class Planets(str, Enum):
     MERCURY = 199
     VENUS = 299
     EARTH = 399
@@ -15,32 +12,32 @@ class Planets(APIEnum):
     NEPTUNE = 899
 
 
-class Observers(APIEnum):
+class Observers(str, Enum):
     SUN = "@10"
     EARTH = f"@{Planets.EARTH}"
 
 
-class Moons(APIEnum):
+class Moons(str, Enum):
     LUNA = 301
 
 
-class AngleFormat(APIEnum):
+class AngleFormat(str, Enum):
     HMS = "HMS"
     DEG = "DEG"
 
 
-class StepSize(APIEnum):
+class StepSize(str, Enum):
     DAY = "day"
     MINUTE = "min"
     HOUR = "hour"
 
 
-class EphemerideOptions(APIEnum):
+class EphemerideOptions(str, Enum):
     APPARENT_RA_AND_DEC = 1
     TRUE_ANOMALY = 41
 
 
-class ResponseOptions(APIEnum):
+class ResponseOptions(str, Enum):
     DATE = "Date__(UT)__HR:MN:SC.fff"
     RA_ICRF = "R.A._(ICRF)"
     RA_A_APP = "R.A._(a-app)"
