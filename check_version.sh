@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-tag_list=$(curl levan.home:5000/v2/horizons-api/tags/list)
+tag_list=$(poetry add horizons_client@latest --dry-run)
 if [[ ${tag_list} == *"$(poetry version -s)"* ]]; then
     echo "Bumping Horizons API version"
     poetry version patch

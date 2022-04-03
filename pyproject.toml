@@ -1,9 +1,13 @@
 [tool.poetry]
 name = "horizons_client"
-version = "0.1.4"
+version = "0.1.5"
 description = "An API Client for communicating with JPL's Horizons Ephemeride database."
 authors = ["alevan <levan.andrew.w@gmail.com>"]
 license = "MIT"
+
+[[tool.poetry.source]]
+name = "home"
+url = "http://pypi.home/"
 
 [tool.poetry.dependencies]
 python = "^3.8"
