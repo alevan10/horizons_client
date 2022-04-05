@@ -17,7 +17,6 @@ class HorizonsRequestService(object):
         ("format", "json"),
         ("MAKE_EPHEM", "YES"),
         ("EPHEM_TYPE", "OBSERVER"),
-        ("ANG_FORMAT", "DEG"),
         ("CSV_FORMAT", "YES"),
     ]
 

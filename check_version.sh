@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 tag_list=$(poetry add horizons_client@latest --dry-run)
 if [[ ${tag_list} == *"$(poetry version -s)"* ]]; then
     echo "Bumping Horizons API version"

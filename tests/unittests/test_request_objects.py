@@ -2,6 +2,7 @@ from datetime import datetime
 
 import pytest
 
+from horizons_client.entities.exceptions import RequestException
 from horizons_client.services.request_objects import (
     BaseRequestObject,
     StartTimeRequest,
@@ -50,6 +51,6 @@ def test_time_objects_only_accept_datetime_objects(time_object):
     assert test_time_obj
     assert test_time_obj.value == datetime.now()
 
-    with pytest.raises(ValueError):
+    with pytest.raises(RequestException):
         bad_time_obj = time_object(value="please fail")
         assert not bad_time_obj
