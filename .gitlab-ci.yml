@@ -84,7 +84,7 @@ Update Downstream Projects:
   script:
     - export VERSION="$(poetry version -s)"
     - export BRANCH_NAME="ruthie/update_horizons_client_$(poetry version -s)"
-    - export HORIZONS_URL="dev.levan.home/alevan/horizons-api"
+    - export HORIZONS_URL="dev.levan.home/horizons/horizons_api"
     - git clone http://robo_ruthie:${HORIZONS_API_TOKEN}@${HORIZONS_URL}
     - cd horizons-api
     - export BRANCH_NAME="ruthie/update_horizons_client_$VERSION"
