@@ -79,6 +79,7 @@ Build and Publish Package:
 Update Downstream Projects:
   stage: Downstream
   retry: 1
+  before_script: []
   only:
     - main
   script:
