@@ -13,7 +13,7 @@ DATETIME_PARSE_MESSAGE = "Deserialization of date value {} failed"
 class ResponseObject:
     def __init__(self, response_dict: Dict[str, Any]):
         try:
-            logger.debug("Response dictionary", response_dict)
+            logger.debug("Response dictionary", extra=response_dict)
             self.date = parse(response_dict.get(ResponseOptions.DATE))
         except (ParserError, ValueError, TypeError):
             logger.error(

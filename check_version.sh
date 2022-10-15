@@ -6,4 +6,5 @@ if [[ ${tag_list} == *"$(poetry version -s)"* ]]; then
     exit 1
 else
     echo "Horizons API version ok"
+    exit 0
 fi

@@ -26,7 +26,7 @@ class BaseRequestObject:
         except TypeError:
             logger.error(
                 "Formatting failed for value {}".format(self.name.upper()),
-                {"value": self.value},
+                extra={"value": self.value},
             )
             return self.name.upper(), "FAILED"
 
@@ -48,7 +48,7 @@ class BaseTimeRequest(BaseRequestObject):
         except TypeError:
             logger.error(
                 "Formatting failed for value {}".format(self.name.upper()),
-                {"value": self.value},
+                extra={"value": self.value},
             )
             return self.name.upper(), "FAILED"
 
