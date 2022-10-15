@@ -2,3 +2,9 @@ venv
 .pytest_cache
 .idea
 /dist/
+
+src/horizons_client/__pycache__/
+src/horizons_client/entities/__pycache__/
+src/horizons_client/services/__pycache__/
+tests/__pycache__/
+tests/unittests/__pycache__/

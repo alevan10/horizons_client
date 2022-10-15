@@ -1,5 +1,6 @@
 # pylint: disable=redefined-outer-name
 import json
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict
 from unittest import mock
@@ -80,3 +81,13 @@ def mock_text_response(get_horizons_response):
     with mock.patch("services.horizons_request.service.aiohttp.get") as mock_get:
         mock_get.return_value = get_horizons_response(output_format="text")
         yield
+
+
+@pytest.fixture
+def start_time():
+    yield datetime.now()
+
+
+@pytest.fixture
+def end_time(start_time):
+    yield start_time + timedelta(days=1)

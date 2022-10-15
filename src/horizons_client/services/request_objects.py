@@ -1,8 +1,11 @@
+import logging
 from datetime import datetime
 from typing import Any, Optional, Tuple, Union
 
 from horizons_client.entities.enums import AngleFormat, Moons, Observers, Planets
 from horizons_client.entities.exceptions import RequestException
+
+logger = logging.getLogger(__name__)
 
 
 class BaseRequestObject:
@@ -18,7 +21,14 @@ class BaseRequestObject:
             raise RequestException("Request object requires a value.")
 
     def generate_request_param(self) -> Tuple[str, str]:
-        return self.name.upper(), f"'{self.value}'"
+        try:
+            return self.name.upper(), f"'{self.value}'"
+        except TypeError:
+            logger.error(
+                "Formatting failed for value {}".format(self.name.upper()),
+                {"value": self.value},
+            )
+            return self.name.upper(), "FAILED"
 
 
 class BaseTimeRequest(BaseRequestObject):
@@ -33,7 +43,14 @@ class BaseTimeRequest(BaseRequestObject):
 
     def generate_request_param(self) -> Tuple[str, str]:
         formatted_time = self.value.strftime(self.time_format)
-        return self.name.upper(), f"'{formatted_time}'"
+        try:
+            return self.name.upper(), f"'{formatted_time}'"
+        except TypeError:
+            logger.error(
+                "Formatting failed for value {}".format(self.name.upper()),
+                {"value": self.value},
+            )
+            return self.name.upper(), "FAILED"
 
 
 class StartTimeRequest(BaseTimeRequest):
