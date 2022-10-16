@@ -30,9 +30,6 @@ before_script:
   - poetry config http-basic.home $PYPI_USER $PYPI_PASSWORD
   - poetry install -v
   - export PYTHONPATH="$PYTHONPATH:$(pwd)/src"
-  - git config --global user.email ruthie@andrewlevan.com
-  - git config --global user.name robo_ruthie
-  - git config --global credential.helper cache
 
 stages:
   - Static Analysis
@@ -79,13 +76,15 @@ Build and Publish Package:
 Update Downstream Projects:
   stage: Downstream
   retry: 1
-  before_script: []
   only:
     - main
   script:
     - export VERSION="$(poetry version -s)"
     - export BRANCH_NAME="ruthie/update_horizons_client_$(poetry version -s)"
     - export HORIZONS_URL="dev.levan.home/horizons/horizons_api"
+    - git config --global user.email ruthie@andrewlevan.com
+    - git config --global user.name robo_ruthie
+    - git config --global credential.helper cache
     - git clone http://robo_ruthie:${HORIZONS_API_TOKEN}@${HORIZONS_URL}
     - cd horizons_api
     - export BRANCH_NAME="ruthie/update_horizons_client_$VERSION"

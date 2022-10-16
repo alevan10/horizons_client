@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "horizons_client"
-version = "0.1.9"
+version = "0.1.10"
 description = "An API Client for communicating with JPL's Horizons Ephemeride database."
 authors = ["alevan <levan.andrew.w@gmail.com>"]
 license = "MIT"
