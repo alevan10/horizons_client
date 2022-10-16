@@ -5,7 +5,7 @@ from dateutil.parser import ParserError, parse
 
 from horizons_client.entities.enums import ResponseOptions
 
-logger = logging.getLogger("ResponseObject")
+logger = logging.getLogger(__name__)
 
 DATETIME_PARSE_MESSAGE = "Deserialization of date value {} failed"
 
@@ -13,6 +13,7 @@ DATETIME_PARSE_MESSAGE = "Deserialization of date value {} failed"
 class ResponseObject:
     def __init__(self, response_dict: Dict[str, Any]):
         try:
+            logger.debug("Response dictionary", extra=response_dict)
             self.date = parse(response_dict.get(ResponseOptions.DATE))
         except (ParserError, ValueError, TypeError):
             logger.error(

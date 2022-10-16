@@ -3,6 +3,8 @@ from typing import Any, Dict, List
 from unittest import mock
 
 import pytest
+from aiohttp import ClientSession
+from asynctest import CoroutineMock
 from freezegun import freeze_time
 
 from horizons_client.entities.enums import ResponseOptions
@@ -73,3 +75,12 @@ def use_mock_response_object():
     with mock.patch("horizons_client.services.utils.ResponseObject") as response_object:
         response_object.side_effect = MockResponseObject
         yield response_object
+
+
+@pytest.fixture
+def patch_client_session(json_response):
+    with mock.patch.object(ClientSession, "get") as mock_get:
+        mock_get.return_value.__aenter__.return_value.json = CoroutineMock(
+            return_value=json_response
+        )
+        yield mock_get

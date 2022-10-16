@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import List
 
@@ -10,6 +11,7 @@ from horizons_client.services.utils import deserialize_ephem_data
 HORIZONS_BASE_URL = os.environ.get(
     "HORIZONS_BASE_URL", "https://ssd.jpl.nasa.gov/api/horizons.api"
 )
+logger = logging.getLogger(__name__)
 
 
 class HorizonsRequestService(object):
@@ -17,6 +19,7 @@ class HorizonsRequestService(object):
         ("format", "json"),
         ("MAKE_EPHEM", "YES"),
         ("EPHEM_TYPE", "OBSERVER"),
+        ("ANG_FORMAT", "DEG"),
         ("CSV_FORMAT", "YES"),
     ]
 
@@ -29,9 +32,10 @@ class HorizonsRequestService(object):
         request_params = [*self.base_params]
         for obj in self._request_objects:
             request_params.append(obj.generate_request_param())
+        logger.debug("Request params", extra={"params": request_params})
         async with ClientSession() as session:
-            async with session.request(
-                method="GET", url=HORIZONS_BASE_URL, params=request_params
+            async with session.get(
+                url=HORIZONS_BASE_URL, params=request_params
             ) as resp:
                 assert resp.ok
                 response_data = await resp.json()
