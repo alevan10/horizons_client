@@ -90,4 +90,4 @@ def start_time():
 
 @pytest.fixture
 def end_time(start_time):
-    yield start_time + timedelta(days=1)
+    yield start_time + timedelta(hours=1)

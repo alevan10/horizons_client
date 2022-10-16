@@ -74,7 +74,7 @@ reference = "home"
 name = "asynctest"
 version = "0.13.0"
 description = "Enhance the standard unittest package with features for testing asyncio libraries"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
 
@@ -1214,7 +1214,7 @@ reference = "home"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "88072cf0cf03a4667e9837a8626e3e10bc8280fb5d6b90520e88ed5aa81effc9"
+content-hash = "14e6c9a9407f7f27d24894f78d485ad1a452b7bc419d2cba128cf73167d79edc"
 
 [metadata.files]
 aiohttp = [

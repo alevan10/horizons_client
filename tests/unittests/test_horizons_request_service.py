@@ -22,14 +22,14 @@ def request_objects(start_time, end_time):
     yield [command, center, start, stop]
 
 
+# pylint: disable=redefined-outer-name
 @pytest.mark.asyncio
 async def test_make_request(patch_client_session, request_objects):
-    session = patch_client_session()
+    session = patch_client_session
     horizons_svc = HorizonsRequestService(request_objects)
-    response = await horizons_svc.make_request()
+    _ = await horizons_svc.make_request()
 
-    assert len(response) == 1
-    assert session.assert_called()
+    assert session.call_count == 1
     expected_params = [
         *HorizonsRequestService.base_params,
         ("COMMAND", "'399'"),
@@ -37,6 +37,6 @@ async def test_make_request(patch_client_session, request_objects):
         request_objects[2].generate_request_param(),
         request_objects[3].generate_request_param(),
     ]
-    assert session.assert_called_once_with(
+    assert session.call_args.kwargs == dict(
         url=HORIZONS_BASE_URL, params=expected_params
     )
